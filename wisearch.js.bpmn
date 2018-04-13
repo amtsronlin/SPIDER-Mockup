@@ -1,0 +1,126 @@
+// requirejs(["node_modules/bpmn-js/lib/Modeler"], function (util) {
+//     //This function is called when scripts/helper/util.js is loaded.
+//     //If util.js calls define(), then this function is not fired until
+//     //util's dependencies have loaded, and the util argument will hold
+//     //the module value for "helper/util".
+// });
+// define(["require", "./relative/name"], function (require) {
+//     var mod = require("./relative/name");
+// });
+$(document).ready(function () {
+    var diagramUrl = 'https://cdn.rawgit.com/bpmn-io/bpmn-js-examples/dfceecba/starter/diagram.bpmn';
+    var commandQueue = [];
+    //modeler instance
+    var modeler = new BpmnJS({
+        container: '#canvas',
+        keyboard: {
+            bindTo: window
+        },
+        additionalModules: [
+            { 'commandQueue': ['type', () => commandQueue] },
+        ],
+    });
+
+
+
+    /**
+     * Save diagram contents and print them to the console.
+     */
+    function exportDiagram() {
+
+        modeler.saveXML({ format: true }, function (err, xml) {
+
+            if (err) {
+                return console.error('could not save BPMN 2.0 diagram', err);
+            }
+
+            alert('Diagram exported. Check the developer tools!');
+
+            console.log('DIAGRAM', xml);
+        });
+    }
+
+    /**
+     * Open diagram in our modeler instance.
+     *
+     * @param {String} bpmnXML diagram to display
+     */
+    function openDiagram(bpmnXML) {
+
+        // import diagram
+        modeler.importXML(bpmnXML, function (err) {
+
+            if (err) {
+                return console.error('could not import BPMN 2.0 diagram', err);
+            }
+
+            // access modeler components
+            var canvas = modeler.get('canvas');
+            var overlays = modeler.get('overlays');
+
+
+            // zoom to fit full viewport
+            canvas.zoom('fit-viewport');
+
+            // attach an overlay to a node
+            overlays.add('SCAN_OK', 'note', {
+                position: {
+                    bottom: 0,
+                    right: 0
+                },
+                html: '<div class="diagram-note">Mixed up the labels?</div>'
+            });
+
+            // add marker
+            canvas.addMarker('SCAN_OK', 'needs-discussion');
+        });
+    }
+
+
+    // load external diagram file via AJAX and open it
+    $.get(diagramUrl, openDiagram, 'text');
+
+    modeler.on('commandStack.changed', function () {
+        // user modeled something or
+        // performed a undo/redo operation
+
+        console.log("commandStack.changed");
+    });
+
+    modeler.on('element.changed', function (event) {
+        var element = event.element;
+
+        console.log("element.changed ---------------");
+        console.log(element);
+        // the element got changed by the users
+    });
+    var eventBus = modeler.get('eventBus');
+
+    var events = [
+        'element.hover',
+        'element.out',
+        'element.click',
+        'element.dblclick',
+        'element.mousedown',
+        'element.mouseup'
+    ];
+
+    events.forEach(function (event) {
+
+        eventBus.on(event, function (e) {
+            // e.element = the model element
+            // e.gfx = the graphical element
+
+            console.log(event, 'on', e.element.id);
+        });
+    });
+
+
+})
+
+function addAtt(index) {
+    $('#addr' + index).html("<td>Attribute:</td><td><input type='text' name='attribute0' placeholder='Attribute' class='form-control'/></td><td></td>");
+    $('#demo' + index).append("<tr id='addr" + index + j + "'></tr>");
+    array.push(j)
+    j ++;
+}
