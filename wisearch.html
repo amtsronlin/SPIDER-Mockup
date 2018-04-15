@@ -125,6 +125,88 @@
             display: none;
         }
 
+        .node-display {
+            border: 1px solid;
+            border-radius: 5px;
+            width: 110px;
+            height: 50px;
+            padding: 4px;;
+            padding-top: 12px;
+        }
+        .path {
+            vertical-align: middle;
+            width: 0; 
+            height: 0; 
+            border-top: 20px solid transparent;
+            border-bottom: 20px solid transparent;
+            border-left: 30px solid green;
+        }
+        .group-object, .node-display, .path {
+            display: inline-block;
+        }
+
+        input {
+            border: 0px;
+            width: 100px;
+
+        }
+
+        .popup {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* The actual popup */
+.popup .popuptext {
+    visibility: hidden;
+    width: 160px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    from {opacity: 0;} 
+    to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+}
+
     </style>
     
 </head>
@@ -165,6 +247,24 @@
             </div>
         </div>
     </nav>
+
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">    
+            <!-- Modal content-->
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Course Detail</h4>
+            </div>
+            <select>
+                <option value='track'>track</option>
+                <option value='parent'>parent</option>
+            </select>
+            <input type="hidden" name="index" id="index" value="" />
+            </div>
+        </div>
+    </div>
+
     <div>
         <div class="row content">
             <div class="col-md-2 sidenav">
@@ -179,12 +279,15 @@
                 </p>
             </div>
             <div class="col-md-10 text-left">
-                <div class="query-diagram-area">
-                    <div id="node1-dom" class="resource-node group-object" style="width: 280px; height: 75px; top: auto; left: auto;">
-                        <div class="node-display" id="node1-display" title="Work Item">
-                        </div>
-                        <div class="path path-right"></div>
+                <div class="card">
+                    <h4 class="card-title">Artifact Relation</h4>
+                    <div class="query-diagram-area">
+                        <div id="node1-dom" class="group-object">
+                            <div class="node-display" id="node1-display" title="Work Item">
+                                <input type="text"/>
+                            </div><div class="path path-right" data-index='2' data-toggle="modal" data-target="#myModal"></div></div><div id="node2-dom" class="group-object"></div>
                     </div>
+                    <a href="#" id="btnNext" class="btn btn-primary">Next</a>
                 </div>
             </div>
         </div>
