@@ -1,5 +1,42 @@
 var index = 2;
+var j = 1;
 var clickedElement;
+var status = '<select class="selectpicker" id="status" multiple data-live-search="true">'+
+'<option value="track">Accepted</option>'+
+'<option value="parent">Approved</option>'+
+'<option value="relate">Closed</option>'+
+'<option value="implement">In progress</option>'+
+'<option value="child">New</option>'+
+'</select>';
+var create = '<select class="selectpicker" id="create" data-live-search="true">'+
+'<option value="track">Mary</option>'+
+'<option value="parent">Peter</option>'+
+'<option value="relate">Join</option>'+
+'<option value="implement">Tom</option>'+
+'<option value="child">Laura</option>'+
+'</select>';
+var create = '<select class="selectpicker" id="create" data-live-search="true">'+
+'<option value="track">Mary</option>'+
+'<option value="parent">Peter</option>'+
+'<option value="relate">Join</option>'+
+'<option value="implement">Tom</option>'+
+'<option value="child">Laura</option>'+
+'</select>';
+var own = '<select class="selectpicker" id="own" data-live-search="true">' +
+'<option value="track">Mary</option>' +
+'<option value="parent">Peter</option>' +
+'<option value="relate">Join</option>' +
+'<option value="implement">Tom</option>' +
+'<option value="child">Laura</option>' +
+'</select>';
+var file = '<select class="selectpicker" id="file" multiple data-live-search="true">' +
+'<option value="track">RBEI</option>' +
+'<option value="parent">MCP</option>' +
+'<option value="relate">RCAR</option>' +
+'<option value="implement">V850</option>' +
+'<option value="child">TC3X</option>' +
+'</select>'
+var due = '<input type="text" style="display:none;" id="due" name="due">'
 $(document).ready(function () {
 
     // $(".path-right" + (i -1)).click(function(){
@@ -79,9 +116,16 @@ $(document).ready(function () {
         $('#file').css({ display: 'none' });
     });
 
+    function addAtt(htmlTxt) {
+        $('add-attr' + j).html(htmlTxt);
+        j++;
+        $('.query-diagram-area').append('<div id="add-attr'+j +'"></div>');
+
+    }
+
 
     $('#condSelect').on('changed.bs.select', function (e) {
-        $('#' + $('#condSelect').selectpicker('val')).css({ display: 'block' });
+        addAtt($('#' + $('#condSelect').selectpicker('val')))
     });
 
 
