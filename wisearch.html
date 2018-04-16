@@ -17,6 +17,7 @@
     <!-- <script data-main="wisearch" src="require.js"></script> -->
     <script src="wisearch.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script defer src="assets/js/fontawesome-all.js"></script>
     
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
@@ -27,6 +28,7 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-contextmenu/0.3.4/bootstrap-contextmenu.js"></script>
 
     <!-- required modeler styles -->
     <link rel="stylesheet" href="node_modules\bpmn-js\dist\assets\diagram-js.css">
@@ -46,7 +48,6 @@
             padding: 0;
             margin: 0;
         }
-
         .diagram-note {
             background-color: rgba(66, 180, 21, 0.7);
             color: White;
@@ -58,12 +59,10 @@
             width: 50px;
             text-align: center;
         }
-
         .needs-discussion:not(.djs-connection) .djs-visual> :nth-child(1) {
             stroke: rgba(66, 180, 21, 0.7) !important;
             /* color elements as red */
         }
-
         /* Remove the navbar's default margin-bottom and rounded borders */
     
         .navbar {
@@ -107,7 +106,6 @@
             padding-left: 10px;
             padding-right: 10px;
         }
-
         #next-button {
             position: fixed;
             bottom: 80px;
@@ -126,11 +124,9 @@
                 height: auto;
             }
         }
-
         div[data-group=model] {
             display: none;
         }
-
         .node-display {
             border: 1px solid;
             border-radius: 5px;
@@ -150,26 +146,23 @@
         .group-object, .node-display, .path {
             display: inline-block;
         }
-
         input {
             border: 0px;
             width: 100px;
-
         }
-
+        #popupRC {
+            z-index: 1;
+        }
  
-
 /* Add animation (fade in the popup) */
 @-webkit-keyframes fadeIn {
     from {opacity: 0;} 
     to {opacity: 1;}
 }
-
 @keyframes fadeIn {
     from {opacity: 0;}
     to {opacity:1 ;}
 }
-
     </style>
     
 </head>
@@ -211,24 +204,135 @@
         </div>
     </nav>
 
+    <!-- Modal -->
+    <div class="modal fade" id="wiModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">WorkItem Attribute</h4>
+
+                </div>
+                <div class="modal-body">
+                    <div role="tabpanel">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#conditionTab" aria-controls="conditionTab" role="tab" data-toggle="tab">Condition</a>
+
+                            </li>
+                            <li role="presentation">
+                                <a href="#columnTab" aria-controls="columnTab" role="tab" data-toggle="tab">Column</a>
+
+                            </li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="conditionTab">
+                                <select class="selectpicker" id="condSelect" data-live-search="true">
+                                    <option value=""></option>
+                                    <option value="status">status</option>
+                                    <option value="own">own by</option>
+                                    <option value="create">create by</option>
+                                    <option value="due">due date</option>
+                                    <option value="file">file against</option>
+                                </select>
+                                <div id="status">
+                                <select class="selectpicker" id="status" multiple data-live-search="true">
+                                    <option value='track'>Accepted</option>
+                                    <option value='parent'>Approved</option>
+                                    <option value='relate'>Closed</option>
+                                    <option value='implement'>In progress</option>
+                                    <option value='child'>New</option>
+                                </select>
+                                </div >
+                                <div id="create">
+                                <select class="selectpicker" id="create" data-live-search="true">
+                                    <option value='track'>Mary</option>
+                                    <option value='parent'>Peter</option>
+                                    <option value='relate'>Join</option>
+                                    <option value='implement'>Tom</option>
+                                    <option value='child'>Laura</option>
+                                </select>
+                                </div>
+                                <div id="own">
+                                <select class="selectpicker" id="own" data-live-search="true">
+                                    <option value='track'>Mary</option>
+                                    <option value='parent'>Peter</option>
+                                    <option value='relate'>Join</option>
+                                    <option value='implement'>Tom</option>
+                                    <option value='child'>Laura</option>
+                                </select>
+                                </div>
+                                <div id="file">
+                                <select class="selectpicker" id="file" multiple data-live-search="true">
+                                    <option value='track'>RBEI</option>
+                                    <option value='parent'>MCP</option>
+                                    <option value='relate'>RCAR</option>
+                                    <option value='implement'>V850</option>
+                                    <option value='child'>TC3X</option>
+                                </select>
+                                </div>
+                                <input type="date" style="display:none;" id="due" name="due">
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="columnTab">columnTab</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary save">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog">    
             <!-- Modal content-->
             <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Course Detail</h4>
+                <h4 class="modal-title">Relation</h4>
             </div>
             <input type="hidden" name="index" id="index" value="" />
-            <select class="selectpicker" multiple data-live-search="true">
-                <option value='track'>Track</option>
-                <option value='parent'>Parent</option>
-                <option value='relate'>Relate</option>
-                <option value='implement'>Implement</option>
-                <option value='child'>Child</option>
-            </select>
+            <div class="d-flex flex-column mb-3 justify-content-center align-items-center">
+                <div class="p-2">
+                    <input type="radio" name="optradio" value="require" checked><label>
+                        Require
+                    </label>
+                    <input type="radio" name="optradio" value="option"><label>
+                        Option
+                    </label>
+                </div>
+                <div class="p-2">
+                    <select class="selectpicker" multiple data-live-search="true">
+                    <option value='track'>Track</option>
+                    <option value='parent'>Parent</option>
+                    <option value='relate'>Relate</option>
+                    <option value='implement'>Implement</option>
+                    <option value='child'>Child</option>
+                    </select>
+                </div>
+                <!-- <div class="p-2">
+                    <button class="btn btn-default" onclick="remove()" data-dismiss="modal" aria-label="Close">Cancel</button>
+                </div> -->
+            </div>
             </div>
         </div>
+    </div>
+
+    <!-- context menu -->
+    <div id="popupRC" style="display:none;" class="panel panel-primary  ">
+        <!-- <div class="panel-heading "></div> -->
+        <!-- <div class="panel-body"> -->
+            <i data-toggle="modal" data-target="#wiModal" class="fa fa-plus-square" aria-hidden="true"></i>
+            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+        <!-- </div> -->
+        <!-- <div class="panel-footer"></div> -->
     </div>
 
     <div>
@@ -242,6 +346,7 @@
                 </p>
                 <p>
                     <a href="wisearch.html">Work Item relation</a>
+                    
                 </p>
             </div>
             <div class="col-md-10 text-left">
@@ -249,19 +354,19 @@
                     <h4 class="card-title">Artifact Relation</h4>
                     <div class="query-diagram-area">
                         <div id="node1-dom" class="group-object">
-                            <div class="node-display" id="node1-display" title="Work Item">
+                            <div class="node-display" id="node1-display" title="Work Item" class="context" data-toggle="context" data-target="#context-menu">
                                 <input type="text"/>
                             </div><div class="path path-right" data-index='2' data-toggle="modal" data-target="#myModal">
                                 <svg width="90px" height="100px"><g>
                                     <defs><marker id="marker" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10" orient="auto"><path d="M 1 5 L 11 10 L 1 15 Z" style="fill: black; stroke-width: 1px; stroke-linecap: round; stroke-dasharray: 10000, 1; stroke: black;"></path>
                                     </marker></defs>
-                                    <text class="djs-label" style="font-family: Arial, sans-serif; font-size: 11px;"><tspan x="6" y="45">bbb</tspan></text>
+                                    <text class="djs-label-u" style="font-family: Arial, sans-serif; font-size: 11px;"></text>
                                     <line x1="0" y1="50" x2="90" y2="50" marker-end="url(#marker)" stroke="black" stroke-width="2"/>
-                                    <text class="djs-label" style="font-family: Arial, sans-serif; font-size: 11px;"><tspan x="6" y="62">aaaa</tspan></text>
+                                    <text class="djs-label-d" style="font-family: Arial, sans-serif; font-size: 11px;"></text>
                                 </g></svg>
                             </div></div><div id="node2-dom" class="group-object"></div>
                     </div>
-                    <a href="#" id="btnNext" class="btn btn-primary">Next</a>
+                    <a href="preview.html" id="btnNext" class="btn btn-primary">Next</a>
                 </div>
             </div>
         </div>
