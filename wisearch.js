@@ -1,40 +1,36 @@
-// function addNode(event) {
-//     var x = document.createElement("INPUT");
-//     x.setAttribute("type", "text");
-//     x.setAttribute("value", "Hello World!");
-//     event.appendChild(x);
-// }
-
-
-
-$(document).ready(function () {
-var index=2;
+var index = 2;
 var clickedElement;
+$(document).ready(function () {
+
     // $(".path-right" + (i -1)).click(function(){
     //     $('#node' + i + "-dom").html("<div class='node-display' id='node" + i +"-display' title='Work Item'></div><div class='path path-right'></div>");
     //     i++;
     //     $('.query-diagram-area').append('<div id="node' + i + '-dom" class="resource-node group-object"></div>');         
     // });
 
-    $("#delete_table").click(function(){
-        if(i>1){
-        $("#addr"+(i-1)).html('');
-        i--;
+    $("#delete_table").click(function () {
+        if (i > 1) {
+            $("#addr" + (i - 1)).html('');
+            i--;
         }
     });
 
-    $(document).on('click', ".ico", function () { 
+    $(document).on('click', ".ico", function () {
         if ($("i", this).html() == "remove") {
             $("i", this).html("add");
         } else {
             $("i", this).html("remove");
         }
     });
-    $('#myModal').on('hidden.bs.modal', function() {
+    $('#myModal').on('hidden.bs.modal', function () {
         var select = $("select", this).val();
-        var idx = $("input", this).val();
-        $(".djs-label-d", clickedElement).html('<tspan x="6" y="62">'+ select +'</tspan>');
-        addNode(idx, select);
+        var radio = $("input[name=optradio]:checked", this).val();
+        var idx = $("input[name=index]", this).val();
+        if (select !== null) {
+            $(".djs-label-d", clickedElement).html('<tspan x="6" y="62">' + select + '</tspan>');
+            $(".djs-label-u", clickedElement).html('<tspan x="6" y="45">' + radio + '</tspan>');
+            addNode(idx, select, this);
+        }
     });
 
     $(document).on("click", ".path-right", function () {
@@ -44,16 +40,56 @@ var clickedElement;
         // As pointed out in comments, 
         // it is superfluous to have to manually call the modal.
         // $('#addBookDialog').modal('show');
-   });
+    });
 
-    function addNode(i, select) {
+    $(document).on('click', ".node-display", function (e) {
+        $("#popupRC").css({
+            position: "absolute", top: e.pageY,
+            left: e.pageX, display: "block"
+        });
+    });
+
+    function addNode(i, select, event) {
         if (index == i) {
-            $('#node' + i + "-dom").html("<div class='node-display' id='node" + i +"-display' title='Work Item'><input type='text'/></div><div class='path path-right' data-index='2' data-toggle='modal' data-target='#myModal'></div>");
-            i++;
             index++;
-            $('.query-diagram-area').append('<div id="node' + i + '-dom" class="group-object"></div>'); 
+            $('#node' + i + "-dom").html("<div class='node-display' id='node" + i + "-display' title='Work Item' class='context' data-toggle='context' data-target='#context-menu'><input type='text'/></div><div class='path path-right' data-index=" + index + " data-toggle='modal' data-target='#myModal'>" + 
+                "<svg width='90px' height='100px'><g><defs><marker id='marker' viewBox='0 0 20 20' refX='11' refY='10' markerWidth='10' markerHeight='10' orient='auto'><path d='M 1 5 L 11 10 L 1 15 Z' style='fill: black; stroke-width: 1px; stroke-linecap: round; stroke-dasharray: 10000, 1; stroke: black;'></path>" +
+                "</marker></defs ><text class='djs-label-u' style='font-family: Arial, sans-serif; font-size: 11px;'></text><line x1='0' y1='50' x2='90' y2='50' marker-end='url(#marker)' stroke='black' stroke-width='2' /><text class='djs-label-d' style='font-family: Arial, sans-serif; font-size: 11px;'></text>" +
+                "</g ></svg ></div>");
+            i++;
+            $('.query-diagram-area').append('<div id="node' + i + '-dom" class="group-object"></div>');
         }
-    
     }
+
+    $('#wiModal .save').click(function (e) {
+        e.preventDefault();
+        addImage(5);
+        $('#myModal').modal('hide');
+        //$(this).tab('show')
+        return false;
+    })
+
+    $('#wiModal').on('hidden.bs.modal', function () {
+        $('#popupRC').css({ display: 'none' });
+    });
+    $('#wiModal').on('show.bs.modal', function () {
+        $('#status').css({ display: 'none' });
+        $('#create').css({ display: 'none' });
+        $('#own').css({ display: 'none' });
+        $('#file').css({ display: 'none' });
+    });
+
+
+    $('#condSelect').on('changed.bs.select', function (e) {
+        $('#' + $('#condSelect').selectpicker('val')).css({ display: 'block' });
+    });
+
+
 })
 
+function remove() {
+    $(".djs-label-d", clickedElement).html('');
+    $(".djs-label-u", clickedElement).html('');
+    var select = $("select", this).val("");
+    var radio = $("input[name=optradio]", this).val("");
+}
