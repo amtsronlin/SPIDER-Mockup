@@ -34,8 +34,14 @@
     <link rel="stylesheet" href="node_modules\bpmn-js\dist\assets\diagram-js.css">
     <link rel="stylesheet" href="node_modules\bpmn-js\dist\assets\bpmn-font\css\bpmn.css">
 
-    <!-- modeler distro -->
-
+    <!-- j-ui -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script>
+    $( function() {
+      $( "#datepicker" ).datepicker();
+    } );
+    </script>
 
 
 
@@ -240,6 +246,7 @@
                                     <option value="due">due date</option>
                                     <option value="file">file against</option>
                                 </select>
+                                <div class="add-attr1"></div>
                                 <div id="status">
                                 <select class="selectpicker" id="status" multiple data-live-search="true">
                                     <option value='track'>Accepted</option>
@@ -248,7 +255,7 @@
                                     <option value='implement'>In progress</option>
                                     <option value='child'>New</option>
                                 </select>
-                                </div >
+                                </div>
                                 <div id="create">
                                 <select class="selectpicker" id="create" data-live-search="true">
                                     <option value='track'>Mary</option>
@@ -276,7 +283,7 @@
                                     <option value='child'>TC3X</option>
                                 </select>
                                 </div>
-                                <input type="date" style="display:none;" id="due" name="due">
+                                <input type="text" style="display:none;" id="due" name="due">
                             </div>
                             <div role="tabpanel" class="tab-pane" id="columnTab">columnTab</div>
                         </div>
