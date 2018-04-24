@@ -2,20 +2,21 @@
 <html lang="en">
 
 <head>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-    crossorigin="anonymous">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-    crossorigin="anonymous">
-
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-    crossorigin="anonymous"></script>
+    <title>SPIDER</title>
+    <script type="text/javascript" src="assets/js/jquery.min.js"></script>
+    <!-- Bootstrap v4.0 -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap-grid.min.css">
+    <script src="assets/js/bootstrap.min.js"></script>
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+        crossorigin="anonymous">
+    <!-- AngularJS -->
+    <script src="assets/js/angular.min.js"></script>
+    <link rel="stylesheet" href="scopesearch.css">
+    <script src="preview.js"></script>
+    <script src="assets/js/fontawesome-all.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
         /* Remove the navbar's default margin-bottom and rounded borders */
     
@@ -53,6 +54,10 @@
             left: 0;
             z-index: 1;
         }
+
+        .navbar-brand {
+            padding: 0px 15px !important;
+        }
     
         .clear {
             clear: both;
@@ -73,43 +78,79 @@
                 height: auto;
             }
         }
+        .fa-sign-out-alt {
+            color: whitesmoke;
+            margin-right: 3px;
+        }
+        .fixed {
+            width: 300px;
+        }
     </style>
 </head>
 <body>
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Logo</a>
+                <a class="navbar-brand" href="#">
+                    <img style="max-height:50px;" src="assets/img/109704_white.png" />
+                </a>
             </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                    <li class="active">
-                        <a href="#">Home</a>
-                    </li>
-                    <li>
-                        <a href="#">About</a>
-                    </li>
-                    <li>
-                        <a href="#">Projects</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="login.html">
-                            <span class="glyphicon glyphicon-log-in"></span> Logout</a>
-                    </li>
-                </ul>
-            </div>
+    
+            <ul class="nav navbar-nav">
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <i class="fas fa-sign-out-alt"></i>
+                    <a href="login.html">Logout</a>
+                </li>
+            </ul>
         </div>
     </nav>
+
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Column display</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <input type="hidden" name="index" id="index" value="" />
+                <div class="d-flex flex-column mb-3 justify-content-center align-items-center">
+                    <div class="p-2">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Name" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">
+                                Name
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Type" id="defaultCheck2">
+                            <label class="form-check-label" for="defaultCheck2">
+                                Type
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Summary" id="defaultCheck2">
+                            <label class="form-check-label" for="defaultCheck2">
+                                Summary
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Own by" id="defaultCheck2">
+                            <label class="form-check-label" for="defaultCheck2">
+                                Own by
+                            </label>
+                        </div>
+                    </div>
+                    <div class="p-2">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div>
         <div class="row content">
             <div class="col-md-2 sidenav">
@@ -117,58 +158,108 @@
                     <a href="dashboard.html">Dashboard</a>
                 </p>
                 <p>
-                    <a href="pasearch.html">Project Area</a>
+                    <a href="scopesearch.html">Scope</a>
                 </p>
                 <p>
-                    <a href="wisearch.html">Work Item relation</a>
+                    <a href="wisearch.html?rtc=1">Artifact Relation</a>
+                </p>
+                <p>
+                    <a href="preview.html">Preview</a>
                 </p>
             </div>
             <div class="col-md-10 text-left">
+                <h1>Preview</h1>
                 <div class="clear">
-                <!-- <table class="table table-bordered table-hover">
-                    <thead>
+                <div class="card">
+                    <div class="card-header">
+                        Details
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="form-group row">
+                                <label for="report" class="col-sm-2 col-form-label">Report Name</label><i class="fa fa-asterisk text-danger"></i>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control" id="report" placeholder="Report name">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <table class="table table-hover">
+                    <thead class="thead-light">
                         <tr>
-                            <th colspan="1" class="text-center">
-                                Display column
-                            </th>
+                            <th scope="col">Server</th>
+                            <th scope="col">Project Area</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>
-                                Work Item:
+                            <th scope="row">rb-alm-28-p.de.bosch.com</th>
+                            <td>CATS</td>
+ 
+                        </tr>
+                        <tr>
+                            <th scope="row">rb-alm-28-p.de.bosch.com</th>
+                            <td>SPIDER</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Artifact</th>
+                            <th scope="col">Relation</th>
+                            <th scope="col">Relation Attribute</th>
+                            <th scope="col">Condition</th>
+                            <th scope="col" class="fixed">Column</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>wi 1</td>
+                            <td>Track by wi2, Parent of wi2</td>
+                            <td>Require</td>
+                            <td>own by Mary or due to 4/18/2018</td>
+                            <td>Name</td><td>
+                                <button class="btn btn-default float-right column" data-toggle="modal" data-target="#myModal">
+                                    <i class="fas fa-plus-circle" aria-hidden="true"></i>
+                                </button>
                             </td>
                         </tr>
                         <tr>
+                            <th scope="row">2</th>
+                            <td>wi 2</td>
+                            <td>Relate to wi3</td>
+                            <td>Option</td>
+                            <td>create by Tom and file against ALM </td>
+                            <td>Name</td>
                             <td>
-                                Column 1 :
+                                <button class="btn btn-default float-right column" data-toggle="modal" data-target="#myModal">
+                                    <i class="fas fa-plus-circle" aria-hidden="true"></i>
+                                </button>
                             </td>
                         </tr>
                         <tr>
+                            <th scope="row">3</th>
+                            <td>wi 3</td>
+                            <td></td>
+                            <td></td>
+                            <td>Status Done, In progress</td>
+                            <td>Name</td>
                             <td>
-                                Column 2 :
+                                <button class="btn btn-default float-right column" data-toggle="modal" data-target="#myModal">
+                                    <i class="fas fa-plus-circle" aria-hidden="true"></i>
+                                </button>
                             </td>
                         </tr>
                     </tbody>
-                </table> -->
-                <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action active">
-                        Work Item 1
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action">Link type 1</a>
-                    <a href="#" class="list-group-item list-group-item-action">Link type 2</a>
-                    <a href="#" class="list-group-item list-group-item-action">Link type 3</a>
-                </div>
-                <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action active">
-                        Work Item 2
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action">Link type 1</a>
-                    <a href="#" class="list-group-item list-group-item-action">Link type 2</a>
-                    <a href="#" class="list-group-item list-group-item-action">Link type 3</a>
-                </div>
+                </table>
             </div>
-            <a class="btn btn-success" href="dashboard.html" role="button">Create Report</a>
+            <a class="btn btn-success" href="wisearch.html?rtc=1" role="button">Back</a>
+            <a class="btn btn-success float-right" href="dashboard.html" role="button">Create Report</a>
             </div>
         </div>
 
