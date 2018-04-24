@@ -1,49 +1,36 @@
 <html>
+
 <head>
     <meta charset="UTF-8">
-    <title>SPIDER workitem</title>
+    <title>SPIDER</title>
+    <!-- j-ui -->
+    <script type="text/javascript" src="assets/js/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="assets/css/jquery-ui.css">
 
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <!-- Latest compiled and minified CSS -->
+    <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
         crossorigin="anonymous">
-    
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-contextmenu/0.3.4/bootstrap-contextmenu.js"></script>
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
         crossorigin="anonymous">
-    <!-- <script src="require.js"></script> -->
-    <script src="node_modules\bpmn-js\dist\bpmn-modeler.development.js"></script>
-    <!-- <script src="node_modules\bpmn-js\lib\Modeler.js"></script> -->
-    <!-- <script data-main="wisearch" src="require.js"></script> -->
+    <!-- AngularJS -->
+    <script src="assets/js/angular.min.js"></script>
     <script src="wisearch.js"></script>
+    <script src="wi_angular.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script defer src="assets/js/fontawesome-all.js"></script>
-    
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-        crossorigin="anonymous"></script>
-
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-contextmenu/0.3.4/bootstrap-contextmenu.js"></script>
-
-    <!-- required modeler styles -->
-    <link rel="stylesheet" href="node_modules\bpmn-js\dist\assets\diagram-js.css">
-    <link rel="stylesheet" href="node_modules\bpmn-js\dist\assets\bpmn-font\css\bpmn.css">
-
-    <!-- j-ui -->
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  
     <script>
-    $( function() {
-      $( "#datepicker" ).datepicker();
-    } );
+        $(function () {
+            $("#datepicker").datepicker();
+        });
     </script>
-
-
 
     <!-- example styles -->
     <style>
@@ -54,6 +41,7 @@
             padding: 0;
             margin: 0;
         }
+
         .diagram-note {
             background-color: rgba(66, 180, 21, 0.7);
             color: White;
@@ -65,36 +53,38 @@
             width: 50px;
             text-align: center;
         }
+
         .needs-discussion:not(.djs-connection) .djs-visual> :nth-child(1) {
             stroke: rgba(66, 180, 21, 0.7) !important;
             /* color elements as red */
         }
+
         /* Remove the navbar's default margin-bottom and rounded borders */
-    
+
         .navbar {
             margin-bottom: 0;
             border-radius: 0;
         }
-    
+
         /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-    
+
         .row.content {
             height: 957px;
             margin-right: 0px;
             margin-left: 0px;
         }
-    
+
         /* Set gray background color and 100% height */
-    
+
         .sidenav {
             padding-top: 20px;
             background-color: #f1f1f1;
             height: 100%;
             font-size: 18px;
         }
-    
+
         /* Set black background color, white text and some padding */
-    
+
         footer {
             background-color: #555;
             color: white;
@@ -105,21 +95,25 @@
             left: 0;
             z-index: 1;
         }
-    
+
         .clear {
             clear: both;
             padding-top: 20px;
             padding-left: 10px;
             padding-right: 10px;
         }
+
         #next-button {
             position: fixed;
             bottom: 80px;
             left: 400px;
         }
-    
+        .form-check {
+            display: inline;
+        }
+
         /* On small screens, set height to 'auto' for sidenav and grid */
-    
+
         @media screen and (max-width: 767px) {
             .sidenav {
                 height: auto;
@@ -130,47 +124,104 @@
                 height: auto;
             }
         }
+
         div[data-group=model] {
             display: none;
         }
+
         .node-display {
             border: 1px solid;
             border-radius: 5px;
             width: 110px;
             height: 50px;
-            padding: 4px;;
+            padding: 4px;
+            ;
             padding-top: 12px;
         }
+
         .path {
             vertical-align: middle;
-            /* width: 0; 
-            height: 0; 
-            border-top: 20px solid transparent;
-            border-bottom: 20px solid transparent;
-            border-left: 30px solid green; */
         }
-        .group-object, .node-display, .path {
+
+        .group-object,
+        .node-display,
+        .path {
             display: inline-block;
         }
-        input {
+
+        .wiInput {
             border: 0px;
             width: 100px;
         }
+
         #popupRC {
             z-index: 1;
         }
- 
-/* Add animation (fade in the popup) */
-@-webkit-keyframes fadeIn {
-    from {opacity: 0;} 
-    to {opacity: 1;}
-}
-@keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity:1 ;}
-}
+
+        .tab-content {
+            height: 500px;
+        }
+
+        .add-attr {
+            margin: 5px;
+        }
+
+        #condSelect {
+            display: inline
+        }
+
+        .d-flex-attr {
+            width: 570px;
+            height: 450px;
+            border: 1px solid #e5e5e5;
+            border-radius: 5px;
+        }
+
+        .query-diagram-area {
+            height: 300px;
+            border: 1px solid #e5e5e5;
+            border-radius: 5px;
+            padding-left: 10px;
+            margin-bottom: 10px;
+        }
+
+        .navbar-brand {
+            padding: 0px 15px !important;
+        }
+
+        .remove {
+            display: inline;
+            margin-left: 5px;
+        }
+
+        /* Add animation (fade in the popup) */
+
+        @-webkit-keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .fa-sign-out-alt {
+            color: whitesmoke;
+            margin-right: 3px;
+        }
+        .choose {
+            margin-right: 10px;
+        }
     </style>
-    
 </head>
 
 <body>
@@ -183,22 +234,10 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Logo</a>
+                <a class="navbar-brand" href="#"><img style="max-height:50px;" src="assets/img/109704_white.png"/></a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
-                    <li class="active">
-                        <a href="#">Home</a>
-                    </li>
-                    <li>
-                        <a href="#">About</a>
-                    </li>
-                    <li>
-                        <a href="#">Projects</a>
-                    </li>
-                    <li>
-                        <a href="#">Contact</a>
-                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
@@ -211,13 +250,12 @@
     </nav>
 
     <!-- Modal -->
-    <div class="modal fade" id="wiModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" id="wiModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-app="myApp" ng-controller="myCtrl">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
-
                     </button>
                     <h4 class="modal-title" id="myModalLabel">WorkItem Attribute</h4>
 
@@ -227,65 +265,68 @@
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
                             <li role="presentation" class="active">
-                                <a href="#conditionTab" aria-controls="conditionTab" role="tab" data-toggle="tab">Condition</a>
-
-                            </li>
-                            <li role="presentation">
-                                <a href="#columnTab" aria-controls="columnTab" role="tab" data-toggle="tab">Column</a>
-
+                                <a href="#conditionTab" ng-if="rtc == 1" aria-controls="conditionTab" role="tab" data-toggle="tab">Share Condition</a>
+                                <a href="#conditionTab" ng-if="rtc == 2" aria-controls="conditionTab" role="tab" data-toggle="tab">Custome Condition</a>
                             </li>
                         </ul>
                         <!-- Tab panes -->
                         <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="conditionTab">
-                                <select class="selectpicker" id="condSelect" data-live-search="true">
-                                    <option value=""></option>
-                                    <option value="status">status</option>
-                                    <option value="own">own by</option>
-                                    <option value="create">create by</option>
-                                    <option value="due">due date</option>
-                                    <option value="file">file against</option>
-                                </select>
-                                <div class="add-attr1"></div>
-                                <div id="status">
-                                <select class="selectpicker" id="status" multiple data-live-search="true">
-                                    <option value='track'>Accepted</option>
-                                    <option value='parent'>Approved</option>
-                                    <option value='relate'>Closed</option>
-                                    <option value='implement'>In progress</option>
-                                    <option value='child'>New</option>
-                                </select>
-                                </div>
-                                <div id="create">
-                                <select class="selectpicker" id="create" data-live-search="true">
-                                    <option value='track'>Mary</option>
-                                    <option value='parent'>Peter</option>
-                                    <option value='relate'>Join</option>
-                                    <option value='implement'>Tom</option>
-                                    <option value='child'>Laura</option>
-                                </select>
-                                </div>
-                                <div id="own">
-                                <select class="selectpicker" id="own" data-live-search="true">
-                                    <option value='track'>Mary</option>
-                                    <option value='parent'>Peter</option>
-                                    <option value='relate'>Join</option>
-                                    <option value='implement'>Tom</option>
-                                    <option value='child'>Laura</option>
-                                </select>
-                                </div>
-                                <div id="file">
-                                <select class="selectpicker" id="file" multiple data-live-search="true">
-                                    <option value='track'>RBEI</option>
-                                    <option value='parent'>MCP</option>
-                                    <option value='relate'>RCAR</option>
-                                    <option value='implement'>V850</option>
-                                    <option value='child'>TC3X</option>
-                                </select>
-                                </div>
-                                <input type="text" style="display:none;" id="due" name="due">
+
+                            <div role="tabpanel" class="tab-pane active conditionTab1" id="conditionTab">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Descripstion</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Query 1</td>
+                                            <td>Descripstion 1</td>
+                                            <td><div class="choose"><i class="fas fa-check-circle pull-right" aria-hidden="true"></i></div></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Query 2</td>
+                                            <td>Descripstion 2</td>
+                                            <td><div class="choose"><i class="fas fa-check-circle pull-right" aria-hidden="true"></i></div></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Query 3</td>
+                                            <td>Descripstion 3</td>
+                                            <td><div class="choose"><i class="fas fa-check-circle pull-right" aria-hidden="true"></i></div></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            <div role="tabpanel" class="tab-pane" id="columnTab">columnTab</div>
+
+                            <div role="tabpanel" class="tab-pane active conditionTab2" id="conditionTab">
+                                <form class="form-inline">
+                                    <label>Add Conditions:</label>
+                                    <select class="selectpicker" id="condSelect" data-live-search="true">
+                                        <option value=""></option>
+                                        <option value="status">status</option>
+                                        <option value="own">own by</option>
+                                        <option value="create">create by</option>
+                                        <option value="due">due date</option>
+                                        <option value="file">file against</option>
+                                    </select>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" name="group20" type="radio" id="radio120" checked="checked">
+                                        <label class="form-check-label" for="radio120">AND</label>
+                                    </div>
+                                
+                                    <div class="form-check">
+                                        <input class="form-check-input" name="group20" type="radio" id="radio121">
+                                        <label class="form-check-label" for="radio121">OR</label>
+                                    </div>
+                                </form>
+                                <div class="d-flex flex-column d-flex-attr">
+                                    <div class="add-attr" id="add-attr1"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -298,48 +339,47 @@
     </div>
 
     <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog">    
+        <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Relation</h4>
-            </div>
-            <input type="hidden" name="index" id="index" value="" />
-            <div class="d-flex flex-column mb-3 justify-content-center align-items-center">
-                <div class="p-2">
-                    <input type="radio" name="optradio" value="require" checked><label>
-                        Require
-                    </label>
-                    <input type="radio" name="optradio" value="option"><label>
-                        Option
-                    </label>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Relation</h4>
                 </div>
-                <div class="p-2">
-                    <select class="selectpicker" multiple data-live-search="true">
-                    <option value='track'>Track</option>
-                    <option value='parent'>Parent</option>
-                    <option value='relate'>Relate</option>
-                    <option value='implement'>Implement</option>
-                    <option value='child'>Child</option>
-                    </select>
+                <input type="hidden" name="index" id="index" value="" />
+                <div class="d-flex flex-column mb-3 justify-content-center align-items-center">
+                    <div class="p-2">
+                        <input type="radio" name="optradio" value="require" checked>
+                        <label>
+                            Require
+                        </label>
+                        <input type="radio" name="optradio" value="option">
+                        <label>
+                            Option
+                        </label>
+                    </div>
+                    <div class="p-2">
+                        <select class="selectpicker" multiple data-live-search="true">
+                            <option value='track'>Track</option>
+                            <option value='parent'>Parent</option>
+                            <option value='relate'>Relate</option>
+                            <option value='implement'>Implement</option>
+                            <option value='child'>Child</option>
+                        </select>
+                    </div>
+                    <div class="p-2">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+                    <button class="btn btn-danger" onclick="remove(this)" data-dismiss="modal" aria-label="Close">Cancel</button>
                 </div>
-                <!-- <div class="p-2">
-                    <button class="btn btn-default" onclick="remove()" data-dismiss="modal" aria-label="Close">Cancel</button>
-                </div> -->
-            </div>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- context menu -->
     <div id="popupRC" style="display:none;" class="panel panel-primary  ">
-        <!-- <div class="panel-heading "></div> -->
-        <!-- <div class="panel-body"> -->
-            <i data-toggle="modal" data-target="#wiModal" class="fa fa-plus-square" aria-hidden="true"></i>
-            <i class="fa fa-arrow-right" aria-hidden="true"></i>
-        <!-- </div> -->
-        <!-- <div class="panel-footer"></div> -->
+        <i data-toggle="modal" data-target="#wiModal" class="fa fa-plus-square" aria-hidden="true"></i>
+        <i class="fa fa-arrow-right" aria-hidden="true"></i>
     </div>
 
     <div>
@@ -349,31 +389,41 @@
                     <a href="dashboard.html">Dashboard</a>
                 </p>
                 <p>
-                    <a href="pasearch.html">Project Area</a>
+                    <a href="scopesearch.html">Scope</a>
                 </p>
                 <p>
-                    <a href="wisearch.html">Work Item relation</a>
-                    
+                    <a href="wisearch.html">Artifact Relation</a>
+                </p>
+                <p>
+                    <a href="preview.html">Preview</a>
                 </p>
             </div>
             <div class="col-md-10 text-left">
                 <div class="card">
-                    <h4 class="card-title">Artifact Relation</h4>
+                    <h1 class="card-title">Artifact Relation</h1>
                     <div class="query-diagram-area">
                         <div id="node1-dom" class="group-object">
                             <div class="node-display" id="node1-display" title="Work Item" class="context" data-toggle="context" data-target="#context-menu">
-                                <input type="text"/>
+                                <input class="wiInput" type="text" value="wi1"/>
                             </div><div class="path path-right" data-index='2' data-toggle="modal" data-target="#myModal">
-                                <svg width="90px" height="100px"><g>
-                                    <defs><marker id="marker" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10" orient="auto"><path d="M 1 5 L 11 10 L 1 15 Z" style="fill: black; stroke-width: 1px; stroke-linecap: round; stroke-dasharray: 10000, 1; stroke: black;"></path>
-                                    </marker></defs>
-                                    <text class="djs-label-u" style="font-family: Arial, sans-serif; font-size: 11px;"></text>
-                                    <line x1="0" y1="50" x2="90" y2="50" marker-end="url(#marker)" stroke="black" stroke-width="2"/>
-                                    <text class="djs-label-d" style="font-family: Arial, sans-serif; font-size: 11px;"></text>
-                                </g></svg>
-                            </div></div><div id="node2-dom" class="group-object"></div>
+                                <svg width="90px" height="100px">
+                                    <g>
+                                        <defs>
+                                            <marker id="marker" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10"
+                                                orient="auto">
+                                                <path d="M 1 5 L 11 10 L 1 15 Z" style="fill: black; stroke-width: 1px; stroke-linecap: round; stroke-dasharray: 10000, 1; stroke: black;"></path>
+                                            </marker>
+                                        </defs>
+                                        <text class="djs-label-u" style="font-family: Arial, sans-serif; font-size: 11px;"></text>
+                                        <line x1="0" y1="50" x2="90" y2="50" marker-end="url(#marker)" stroke="black" stroke-width="2" />
+                                        <text class="djs-label-d" style="font-family: Arial, sans-serif; font-size: 11px;"></text>
+                                    </g>
+                                </svg>
+                            </div>
+                        </div><div id="node2-dom" class="group-object"></div>
                     </div>
-                    <a href="preview.html" id="btnNext" class="btn btn-primary">Next</a>
+                    <a href="scopesearch.html" id="btnNext" class="btn btn-success">Back</a>
+                    <a href="preview.html" id="btnNext" class="btn btn-success pull-right">Next</a>
                 </div>
             </div>
         </div>
@@ -381,6 +431,7 @@
     <footer class="container-fluid text-center">
         <p>Footer Text</p>
     </footer>
-    
+
 </body>
+
 </html>
