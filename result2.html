@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>SPIDER</title>
+    <script type="text/javascript" src="assets/js/jquery.min.js"></script>
+    <!-- Bootstrap v4.0 -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap-grid.min.css">
+    <script src="assets/js/bootstrap.min.js"></script>
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+        crossorigin="anonymous">
+    <!-- AngularJS -->
+    <script src="assets/js/angular.min.js"></script>
+    <link rel="stylesheet" href="scopesearch.css">
+    <script src="result2.js"></script>
+    <script src="assets/js/fontawesome-all.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        /* Remove the navbar's default margin-bottom and rounded borders */
+
+        .navbar {
+            margin-bottom: 0;
+            border-radius: 0;
+        }
+
+        /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+
+        .row.content {
+            height: 957px;
+            margin-right: 0px;
+            margin-left: 0px;
+        }
+
+        /* Set gray background color and 100% height */
+
+        .sidenav {
+            padding-top: 20px;
+            background-color: #f1f1f1;
+            height: 100%;
+            font-size: 18px;
+        }
+
+        /* Set black background color, white text and some padding */
+
+        footer {
+            background-color: #555;
+            color: white;
+            padding: 15px;
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        .navbar-brand {
+            padding: 0px 15px !important;
+        }
+
+        .clear {
+            clear: both;
+            padding-top: 20px;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        /* On small screens, set height to 'auto' for sidenav and grid */
+
+        @media screen and (max-width: 767px) {
+            .sidenav {
+                height: auto;
+                padding: 15px;
+                font-size: 18px;
+            }
+            .row.content {
+                height: auto;
+            }
+        }
+
+        .fa-sign-out-alt {
+            color: whitesmoke;
+            margin-right: 3px;
+        }
+
+        .fixed {
+            width: 300px;
+        }
+        .group-object, .panel {
+            display: inline-block;
+        }
+        .arrow {
+            border-top: solid 1px black;
+        }
+        .list-group-item {
+            padding: 0.4rem;
+        }
+        .table td, .table th {
+            padding: 0.2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <img style="max-height:50px;" src="assets/img/109704_white.png" />
+                </a>
+            </div>
+
+            <ul class="nav navbar-nav">
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <i class="fas fa-sign-out-alt"></i>
+                    <a href="login.html">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Column display</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <input type="hidden" name="index" id="index" value="" />
+                <div class="d-flex flex-column mb-3 justify-content-center align-items-center">
+                    <div class="p-2">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Name" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">
+                                Name
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Type" id="defaultCheck2">
+                            <label class="form-check-label" for="defaultCheck2">
+                                Type
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Summary" id="defaultCheck2">
+                            <label class="form-check-label" for="defaultCheck2">
+                                Summary
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Own by" id="defaultCheck2">
+                            <label class="form-check-label" for="defaultCheck2">
+                                Own by
+                            </label>
+                        </div>
+                    </div>
+                    <div class="p-2">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="row content">
+            <div class="col-md-2 sidenav">
+                <p>
+                    <a href="dashboard.html">Dashboard</a>
+                </p>
+                <p>
+                    <a href="scopesearch.html">Scope</a>
+                </p>
+                <p>
+                    <a href="wisearch.html?rtc=1">Artifact Relation</a>
+                </p>
+                <p>
+                    <a href="preview.html">Preview</a>
+                </p>
+            </div>
+            <div class="col-md-10 text-left">
+                <h1>Result</h1>
+                <div class="clear">
+                    <div class="card">
+                        <div class="card-header">
+                            Details
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="form-group row">
+                                    <label for="report" class="col-sm-2 col-form-label">Workitems</label>
+                                    <div class="col-sm-5">
+                                        <select name='wi' class="form-control">
+                                            <option value="1">Work Item 1</option>
+                                            <option value="2">Work Item 2</option>
+                                            <option value="3">Work Item 3</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="query-diagram-area1">
+                                    <div class="d-flex flex-column bd-highlight mb-3">
+                                    <div class="p-2 bd-highlight">
+                                    <div id="node1-dom" class="group-object">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">WI 1</div>
+                                            <div class="panel-body">
+                                                <table class="table table-hover">
+                                                    <thead class="thead-light">
+                                                        <tr>
+                                                            <th scope="col-sm-2">Project</th>
+                                                            <th scope="col-sm-2">ID</th>
+                                                            <th scope="col-sm-2">Name</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>BSW Solutions</td>
+                                                            <td>
+                                                                <a>124696</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="view.html?wi=1" target="_blank">[SPIDER]: Sprint 1</a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default arrow">
+                                            <div class="panel-body">Childern, track</div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">WI 2</div>
+                                            <div class="panel-body">
+                                                <table class="table table-hover">
+                                                    <thead class="thead-light">
+                                                        <tr>
+                                                            <th scope="col-sm-2">Project</th>
+                                                            <th scope="col-sm-2">ID</th>
+                                                            <th scope="col-sm-2">Name</th>
+                                                            <th scope="col-sm-2">Status</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>BSW Solutions</td>
+                                                            <td>
+                                                                <a>124653</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="view.html?wi=2" target="_blank">[SPIDER]: Create UI Mockups</a>
+                                                            </td>
+                                                            <td>
+                                                                <a>New</a>
+                                                            </td>
+                                    
+                                                        </tr>
+                                                        <tr>
+                                                            <td>BSW Solutions</td>
+                                                            <td>
+                                                                <a>122777</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="view.html?wi=2" target="_blank">[SPIDER]: project structure and delivery</a>
+                                                            </td>
+                                                            <td>
+                                                                <a>New</a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    </div>
+                                    <div class="d-flex flex-column bd-highlight mb-3">
+                                    <div class="p-2 bd-highlight">
+                                    <div id="node3-dom" class="group-object">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">WI 2</div>
+                                            <div class="panel-body">
+                                                <table class="table table-hover">
+                                                    <thead class="thead-light">
+                                                        <tr>
+                                                            <th scope="col-sm-2">Project</th>
+                                                            <th scope="col-sm-2">ID</th>
+                                                            <th scope="col-sm-2">Name</th>
+                                                            <th scope="col-sm-2">Status</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>BSW Solutions</td>
+                                                            <td>
+                                                                <a>124653</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="view.html?wi=2" target="_blank">[SPIDER]: Create UI Mockups</a>
+                                                            </td>
+                                                            <td>
+                                                                <a>New</a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="panel panel-default arrow">
+                                            <div class="panel-body">Childern, track</div>
+                                        </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">WI 3</div>
+                                            <div class="panel-body">
+                                                <table class="table table-hover">
+                                                    <thead class="thead-light">
+                                                        <tr>
+                                                            <th scope="col-sm-2">Project</th>
+                                                            <th scope="col-sm-2">ID</th>
+                                                            <th scope="col-sm-2">Name</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>BSW Solutions</td>
+                                                            <td>
+                                                                <a>125377</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="view.html?wi=3" target="_blank">[SPIDER]: Create UI Mockups html ver1</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>BSW Solutions</td>
+                                                            <td>
+                                                                <a>126308</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="view.html?wi=3" target="_blank">[SPIDER]: Update mockup prototype ver 1</a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>BSW Solutions</td>
+                                                            <td>
+                                                                <a>127327</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="view.html?wi=3" target="_blank">[SPIDER]: Update result mockup prototype ver 1</a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-column bd-highlight mb-3">
+                                        <div class="p-2 bd-highlight">
+                                            <div id="node3-dom" class="group-object">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">WI 2</div>
+                                                    <div class="panel-body">
+                                                        <table class="table table-hover">
+                                                            <thead class="thead-light">
+                                                                <tr>
+                                                                    <th scope="col-sm-2">Project</th>
+                                                                    <th scope="col-sm-2">ID</th>
+                                                                    <th scope="col-sm-2">Name</th>
+                                                                    <th scope="col-sm-2">Status</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>BSW Solutions</td>
+                                                                    <td>
+                                                                        <a>122777</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="view.html?wi=2" target="_blank">[SPIDER]: project structure and delivery</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a>New</a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="panel panel-default arrow">
+                                                    <div class="panel-body">Childern, track</div>
+                                                </div>
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">WI 3</div>
+                                                    <div class="panel-body">
+                                                        <table class="table table-hover">
+                                                            <thead class="thead-light">
+                                                                <tr>
+                                                                    <th scope="col-sm-2">Project</th>
+                                                                    <th scope="col-sm-2">ID</th>
+                                                                    <th scope="col-sm-2">Name</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>BSW Solutions</td>
+                                                                    <td>
+                                                                        <a>123536</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="view.html?wi=3" target="_blank">[SPIDER]: AOP logging for project</a>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>BSW Solutions</td>
+                                                                    <td>
+                                                                        <a>124823</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="view.html?wi=3" target="_blank">[SPIDER] project structure</a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="query-diagram-area2">
+                                    <div class="d-flex flex-column bd-highlight mb-3">
+                                        <div class="p-2 bd-highlight">
+                                            <div id="node1-dom" class="group-object">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">WI 2</div>
+                                                    <div class="panel-body">
+                                                        <table class="table table-hover">
+                                                            <thead class="thead-light">
+                                                                <tr>
+                                                                    <th scope="col-sm-2">Project</th>
+                                                                    <th scope="col-sm-2">ID</th>
+                                                                    <th scope="col-sm-2">Name</th>
+                                                                    <th scope="col-sm-2">Status</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>BSW Solutions</td>
+                                                                    <td>
+                                                                        <a>124653</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="view.html?wi=1" target="_blank">[SPIDER]: Create UI Mockups</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a>New</a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="panel panel-default arrow">
+                                                    <div class="panel-body">Childern, track</div>
+                                                </div>
+                                                <div id="node3-dom" class="group-object">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">WI 3</div>
+                                                        <div class="panel-body">
+                                                            <table class="table table-hover">
+                                                                <thead class="thead-light">
+                                                                    <tr>
+                                                                        <th scope="col-sm-2">Project</th>
+                                                                        <th scope="col-sm-2">ID</th>
+                                                                        <th scope="col-sm-2">Name</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>BSW Solutions</td>
+                                                                        <td>
+                                                                            <a>125377</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a href="view.html?wi=3" target="_blank">[SPIDER]: Create UI Mockups html ver1</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>BSW Solutions</td>
+                                                                        <td>
+                                                                            <a>126308</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a href="view.html?wi=3" target="_blank">[SPIDER]: Update mockup prototype ver 1</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>BSW Solutions</td>
+                                                                        <td>
+                                                                            <a>127327</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a href="view.html?wi=3" target="_blank">[SPIDER]: Update result mockup prototype ver 1</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="p-2 bd-highlight">
+                                            <div id="node1-dom" class="group-object">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">WI 2</div>
+                                                    <div class="panel-body">
+                                                        <table class="table table-hover">
+                                                            <thead class="thead-light">
+                                                                <tr>
+                                                                    <th scope="col-sm-2">Project</th>
+                                                                    <th scope="col-sm-2">ID</th>
+                                                                    <th scope="col-sm-2">Name</th>
+                                                                    <th scope="col-sm-2">Status</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>BSW Solutions</td>
+                                                                    <td>
+                                                                        <a>122777</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="view.html?wi=1" target="_blank">[SPIDER]: project structure and delivery</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a>New</a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="panel panel-default arrow">
+                                                    <div class="panel-body">Childern, track</div>
+                                                </div>
+                                                <div id="node3-dom" class="group-object">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">WI 3</div>
+                                                        <div class="panel-body">
+                                                            <table class="table table-hover">
+                                                                <thead class="thead-light">
+                                                                    <tr>
+                                                                        <th scope="col-sm-2">Project</th>
+                                                                        <th scope="col-sm-2">ID</th>
+                                                                        <th scope="col-sm-2">Name</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>BSW Solutions</td>
+                                                                        <td>
+                                                                            <a>123536</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a href="view.html?wi=3" target="_blank">[SPIDER]: AOP logging for project</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>BSW Solutions</td>
+                                                                        <td>
+                                                                            <a>124823</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a href="view.html?wi=3" target="_blank">[SPIDER] project structure</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="p-2 bd-highlight">
+                                            <hr>
+                                            <div id="node1-dom" class="group-object">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">WI 2</div>
+                                                    <div class="panel-body">
+                                                        <table class="table table-hover">
+                                                            <thead class="thead-light">
+                                                                <tr>
+                                                                    <th scope="col-sm-2">Project</th>
+                                                                    <th scope="col-sm-2">ID</th>
+                                                                    <th scope="col-sm-2">Name</th>
+                                                                    <th scope="col-sm-2">Status</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>BSW Solutions</td>
+                                                                    <td>
+                                                                        <a>122777</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="view.html?wi=1" target="_blank">[SPIDER]: project structure and delivery</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        New
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>BSW Solutions</td>
+                                                                    <td>
+                                                                        <a>124653</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="view.html?wi=1" target="_blank">[SPIDER]: Create UI Mockups</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        New
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="panel panel-default arrow">
+                                                    <div class="panel-body">Parent, Contribute</div>
+                                                </div>
+                                                <div id="node3-dom" class="group-object">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">WI 1</div>
+                                                        <div class="panel-body">
+                                                            <table class="table table-hover">
+                                                                <thead class="thead-light">
+                                                                    <tr>
+                                                                        <th scope="col-sm-2">Project</th>
+                                                                        <th scope="col-sm-2">ID</th>
+                                                                        <th scope="col-sm-2">Name</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>BSW Solutions</td>
+                                                                        <td>
+                                                                            <a>124696</a>
+                                                                        </td>
+                                                                        <td>
+                                                                            <a href="view.html?wi=3" target="_blank">[SPIDER]: Sprint 1</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="query-diagram-area3">
+                                    <div class="d-flex flex-column bd-highlight mb-3">
+                                        <div class="p-2 bd-highlight">
+                                            <div id="node3-dom" class="group-object">
+                                                
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">WI 3</div>
+                                                    <div class="panel-body">
+                                                        <table class="table table-hover">
+                                                            <thead class="thead-light">
+                                                                <tr>
+                                                                    <th scope="col-sm-2">Project</th>
+                                                                    <th scope="col-sm-2">ID</th>
+                                                                    <th scope="col-sm-2">Name</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>BSW Solutions</td>
+                                                                    <td>
+                                                                        <a>125377</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="view.html?wi=3" target="_blank">[SPIDER]: Create UI Mockups html ver1</a>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>BSW Solutions</td>
+                                                                    <td>
+                                                                        <a>126308</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="view.html?wi=3" target="_blank">[SPIDER]: Update mockup prototype ver 1</a>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>BSW Solutions</td>
+                                                                    <td>
+                                                                        <a>127327</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="view.html?wi=3" target="_blank">[SPIDER]: Update result mockup prototype ver 1</a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="panel panel-default arrow">
+                                                    <div class="panel-body">Parent, Contribute</div>
+                                                </div>
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">WI 2</div>
+                                                    <div class="panel-body">
+                                                        <table class="table table-hover">
+                                                            <thead class="thead-light">
+                                                                <tr>
+                                                                    <th scope="col-sm-2">Project</th>
+                                                                    <th scope="col-sm-2">ID</th>
+                                                                    <th scope="col-sm-2">Name</th>
+                                                                    <th scope="col-sm-2">Status</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>BSW Solutions</td>
+                                                                    <td>
+                                                                        <a>124653</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="view.html?wi=2" target="_blank">[SPIDER]: Create UI Mockups</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a>New</a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex flex-column bd-highlight mb-3">
+                                        <div class="p-2 bd-highlight">
+                                            <div id="node3-dom" class="group-object">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">WI 3</div>
+                                                    <div class="panel-body">
+                                                        <table class="table table-hover">
+                                                            <thead class="thead-light">
+                                                                <tr>
+                                                                    <th scope="col-sm-2">Project</th>
+                                                                    <th scope="col-sm-2">ID</th>
+                                                                    <th scope="col-sm-2">Name</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>BSW Solutions</td>
+                                                                    <td>
+                                                                        <a>123536</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="view.html?wi=3" target="_blank">[SPIDER]: AOP logging for project</a>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>BSW Solutions</td>
+                                                                    <td>
+                                                                        <a>124823</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="view.html?wi=3" target="_blank">[SPIDER] project structure</a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="panel panel-default arrow">
+                                                    <div class="panel-body">Parent, Contribute</div>
+                                                </div>
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">WI 2</div>
+                                                    <div class="panel-body">
+                                                        <table class="table table-hover">
+                                                            <thead class="thead-light">
+                                                                <tr>
+                                                                    <th scope="col-sm-2">Project</th>
+                                                                    <th scope="col-sm-2">ID</th>
+                                                                    <th scope="col-sm-2">Name</th>
+                                                                    <th scope="col-sm-2">Status</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>BSW Solutions</td>
+                                                                    <td>
+                                                                        <a>122777</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="view.html?wi=2" target="_blank">[SPIDER]: project structure and delivery</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a>New</a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex flex-column bd-highlight mb-3">
+                                        <div class="p-2 bd-highlight">
+                                            <div id="node1-dom" class="group-object">
+                                                
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">WI 2</div>
+                                                    <div class="panel-body">
+                                                        <table class="table table-hover">
+                                                            <thead class="thead-light">
+                                                                <tr>
+                                                                    <th scope="col-sm-2">Project</th>
+                                                                    <th scope="col-sm-2">ID</th>
+                                                                    <th scope="col-sm-2">Name</th>
+                                                                    <th scope="col-sm-2">Status</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>BSW Solutions</td>
+                                                                    <td>
+                                                                        <a>124653</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="view.html?wi=2" target="_blank">[SPIDER]: Create UI Mockups</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a>New</a>
+                                                                    </td>
+                                                
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>BSW Solutions</td>
+                                                                    <td>
+                                                                        <a>122777</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="view.html?wi=2" target="_blank">[SPIDER]: project structure and delivery</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a>New</a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div class="panel panel-default arrow">
+                                                    <div class="panel-body">Parent, Contribute</div>
+                                                </div>
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">WI 1</div>
+                                                    <div class="panel-body">
+                                                        <table class="table table-hover">
+                                                            <thead class="thead-light">
+                                                                <tr>
+                                                                    <th scope="col-sm-2">Project</th>
+                                                                    <th scope="col-sm-2">ID</th>
+                                                                    <th scope="col-sm-2">Name</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>BSW Solutions</td>
+                                                                    <td>
+                                                                        <a>124696</a>
+                                                                    </td>
+                                                                    <td>
+                                                                        <a href="view.html?wi=1" target="_blank">[SPIDER]: Sprint 1</a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <a class="btn btn-success" href="wisearch.html?rtc=1" role="button">Back</a>
+                <a class="btn btn-success float-right" href="dashboard.html" role="button">Create Report</a>
+            </div>
+        </div>
+
+    </div>
+    <footer class="container-fluid text-center">
+        <p>Footer Text</p>
+    </footer>
+</body>
+
+</html>
