@@ -1,0 +1,135 @@
+package rba.tools.alm.atrs.application.DTO;
+
+import java.util.List;
+
+public class WorkItemAttributeDTO {
+	private String id;
+
+	private String type;
+
+	private String name;
+
+	private String createBy;
+
+	private String ownBy;
+
+	private String server;
+
+	private String projectArea;
+
+	private String status;
+
+	private String dueTo;
+
+	private List<String> linkTarget;
+
+	private List<String> linkSource;
+
+	private String target;
+
+	private String source;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getCreateBy() {
+		return createBy;
+	}
+
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
+	}
+
+	public String getOwnBy() {
+		return ownBy;
+	}
+
+	public void setOwnBy(String ownBy) {
+		this.ownBy = ownBy;
+	}
+
+	public String getServer() {
+		return server;
+	}
+
+	public void setServer(String server) {
+		this.server = server;
+	}
+
+	public String getProjectArea() {
+		return projectArea;
+	}
+
+	public void setProjectArea(String projectArea) {
+		this.projectArea = projectArea;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getDueTo() {
+		return dueTo;
+	}
+
+	public void setDueTo(String dueTo) {
+		this.dueTo = dueTo;
+	}
+
+	public List<String> getLinkTarget() {
+		return linkTarget;
+	}
+
+	public void setLinkTarget(List<String> linkTarget) {
+		this.linkTarget = linkTarget;
+	}
+
+	public List<String> getLinkSource() {
+		return linkSource;
+	}
+
+	public void setLinkSource(List<String> linkSource) {
+		this.linkSource = linkSource;
+	}
+
+	public String getTarget() {
+		return target;
+	}
+
+	public void setTarget(String target) {
+		this.target = target;
+	}
+
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
+	}
+}
