@@ -29,6 +29,8 @@ public class WorkItemAttributeDTO {
 
 	private String source;
 
+	private List<String> columnDisplay;
+
 	public String getId() {
 		return id;
 	}
@@ -132,4 +134,13 @@ public class WorkItemAttributeDTO {
 	public void setSource(String source) {
 		this.source = source;
 	}
+
+	public List<String> getColumnDisplay() {
+		return columnDisplay;
+	}
+
+	public void setColumnDisplay(List<String> columnDisplay) {
+		this.columnDisplay = columnDisplay;
+	}
+
 }
